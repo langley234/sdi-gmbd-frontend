@@ -16,9 +16,10 @@ class NavBar extends React.Component
     render()
     {
         return (
-                <div>
+                <div className="nav-bar">
                     <h2>GMDB</h2>
-                    <a id="nav-bar-home-link">Home</a>
+                    <a id="nav-bar-home-link">
+                        <Link to="/">Home</Link></a>
                     <a id="nav-bar-login-link">
                         <Link to="/login">Login</Link></a>
                     <div>

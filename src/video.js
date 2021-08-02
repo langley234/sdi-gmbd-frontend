@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 class Video extends React.Component
 {
@@ -65,7 +71,9 @@ class Video extends React.Component
     }
 
     handleClickCallback = () => {
-
+        this.setState({
+            displayMode: 'single'
+        })
     }
 
     render()
@@ -75,14 +83,18 @@ class Video extends React.Component
             <div>
                 {
                     this.state.error ?
-                    <div></div> :
-                        <img
-                            src={this.props.data.poster}
-                            alt={this.props.data.title}
-                            onLoad={this.handleImageLoaded}
-                            onError={this.handleImageLoadError}
-                            onClick={this.handleClickCallback}>
-                        </img>
+                        <div></div> :
+                        this.state.displayMode === 'multi' ?
+                            <Link to={`/videos/${this.props.data.movieId}`}>
+                                <img
+                                    src={this.props.data.poster}
+                                    alt={this.props.data.title}
+                                    onLoad={this.handleImageLoaded}
+                                    onError={this.handleImageLoadError}
+                                    onClick={this.handleClickCallback}>
+                                </img>
+                            </Link> :
+                            <div>viewing single video</div>
                 }
             </div>
         );

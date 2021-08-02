@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './navBar';
 import {
     BrowserRouter as Router,
     Switch,
@@ -15,8 +16,8 @@ class Login extends React.Component
 
     render() {
         return (
-            <Router>
                 <div>
+                    <NavBar />
                     <h2>Login</h2>
                     <form>
                         <label>Email:</label>
@@ -26,7 +27,6 @@ class Login extends React.Component
                     </form>
                     <button>Login</button>
                 </div>
-            </Router>
         );
     }
 }

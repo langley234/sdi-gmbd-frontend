@@ -1,5 +1,6 @@
 import React from 'react';
 import Video from './video';
+import './App.css'
 import {
     BrowserRouter as Router,
     Switch,
@@ -52,12 +53,15 @@ class VideoList extends React.Component
 
                     </Route>
                     <Route path="/">
-                        <div>
+                        <div className="videos">
                             {
                                 this.state.data === null ?
                                     <h1>No Data Present</h1> :
-                                    <div>{this.state.data.map((item) => {
-                                        return <Video key={this.videoId++} data={item} displayMode={'multi'} />
+                                    <div className="videos">{this.state.data.map((item) => {
+                                        return <Video
+                                            key={this.videoId++}
+                                            data={item}
+                                            displayMode={'multi'} />
                                     })}</div>
                             }
                         </div>

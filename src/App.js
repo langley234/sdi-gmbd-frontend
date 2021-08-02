@@ -20,7 +20,10 @@ function App() {
     <Router>
 
       <Switch>
-        <Route exact path="/login">
+        <Route path="/videos/:id">
+          <SingleVid />
+        </Route>
+        <Route path="/login">
           <Login />
         </Route>
         <Route path="/">
@@ -39,6 +42,7 @@ function App() {
 
   function SingleVid() {
     let { videoId } = useParams();
+    console.log('VIDEO ID : ', videoId);
     return <Video videoName={videoId}/>
   }
 }
