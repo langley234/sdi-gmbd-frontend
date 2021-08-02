@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 import NavBar from './navBar.js';
 import Video from './video.js';
@@ -72,13 +72,6 @@ test('VideoList does render', () => {
 // ***************************** END VIDEOLIST COMPONENT UNIT TESTS ********************************* //
 
 // ***************************** START VIDEO COMPONENT UNIT TESTS ********************************* //
-test('Video should return error text if it cannot load the image for the video', async () => {
-  //let mockData = {poster : "http://ia.media-imdb.com/images/M/MV5BMTgyODc2ODg0NF5BMl5BanBnXkFtZTgwNjExMzgyMDE@._V1_SX300.jpg" }
-  let mockData = {poster: 'bad-url'};
-  render(<Video data={mockData}/>);
-  screen.findByText(/could not load image/i);
-  let textElement = screen.findByText(/Could Not Load Image/i);
-  expect(textElement).toBeInTheDocument();
-});
+
 // ***************************** END VIDEO COMPONENT UNIT TESTS ********************************* //
 

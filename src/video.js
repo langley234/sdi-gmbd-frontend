@@ -6,36 +6,84 @@ class Video extends React.Component
     {
         super(props);
 
-        this.state = {
-            imageLoaded: false,
-            error: false
+        if (this.props.data !== undefined)
+        {
+            this.state = {
+                imageLoaded: false,
+                error: false,
+                isLoaded: false,
+                displayMode: props.displayMode,
+                data: null
+            }
+        }
+        else {
+            this.state = {
+                imageLoaded: false,
+                error: false,
+                isLoaded: false,
+                displayMode: 'single',
+                data: null
+            }
+        }
+        
+    }
+
+    componentDidMount()
+    {
+        if (this.props.data === undefined) {
+            fetch(`http://localhost:3001/movies/${this.props.videoId}`)
+                .then(result => result.json())
+                .then(
+                    (result) => {
+                        console.log('RESULT : ', result);
+                        this.setState({
+                            isLoaded: true,
+                            data: result
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
         }
     }
 
     handleImageLoaded = () => {
         this.setState({
-            imageLoaded: true
+            imageLoaded: true,
+            isLoaded: true
         })
     }
 
     handleImageLoadError = () => {
-        //console.log('Error Loading Image');
-
         this.setState({
             error: true
         })
     }
 
+    handleClickCallback = () => {
+
+    }
+
     render()
     {
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div>
                 {
-                    this.state.error === false ?
-                    <img src={this.props.data.poster} alt={this.props.data.title} onLoad={this.handleImageLoaded} onError={this.handleImageLoadError}></img> :
-                    <h3>{`Could Not Load Image For "${this.props.data.title}"`}</h3>
-                }  
+                    this.state.error ?
+                    <div></div> :
+                        <img
+                            src={this.props.data.poster}
+                            alt={this.props.data.title}
+                            onLoad={this.handleImageLoaded}
+                            onError={this.handleImageLoadError}
+                            onClick={this.handleClickCallback}>
+                        </img>
+                }
             </div>
         );
     }

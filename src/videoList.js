@@ -1,5 +1,11 @@
 import React from 'react';
 import Video from './video';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 
 class VideoList extends React.Component
 {
@@ -22,7 +28,7 @@ class VideoList extends React.Component
             .then(result => result.json())
             .then(
                 (result) => {
-                    //console.log('RESULT : ', result);
+                    console.log('RESULT : ', result);
                     this.setState({
                         isLoaded: true,
                         data: result
@@ -36,18 +42,28 @@ class VideoList extends React.Component
                 }
             )
     }
+    
     render()
     {
         return (
-            <div>
-            {
-                this.state.data === null ? 
-                <h1>No Data Present</h1> :
-                <div>{this.state.data.map((item) => {
-                    return <Video key={this.videoId++} data={item}/>
-                })}</div>
-            }
-            </div>
+            <Router>
+                <Switch>
+                    <Route path="/video:id">
+
+                    </Route>
+                    <Route path="/">
+                        <div>
+                            {
+                                this.state.data === null ?
+                                    <h1>No Data Present</h1> :
+                                    <div>{this.state.data.map((item) => {
+                                        return <Video key={this.videoId++} data={item} displayMode={'multi'} />
+                                    })}</div>
+                            }
+                        </div>
+                    </Route>
+                </Switch>
+            </Router>
         );
     }
 }
@@ -55,7 +71,3 @@ class VideoList extends React.Component
 
 
 export default VideoList;
-
-// fetch('http://example.com/movies.json')
-//   .then(response => response.json())
-//   .then(data => console.log(data));
