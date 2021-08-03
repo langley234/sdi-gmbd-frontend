@@ -47,27 +47,24 @@ class VideoList extends React.Component
     render()
     {
         return (
-            <Router>
-                <Switch>
-                    <Route path="/video:id">
 
-                    </Route>
-                    <Route path="/">
-                        <div className="videos">
-                            {
-                                this.state.data === null ?
-                                    <h1>No Data Present</h1> :
-                                    <div className="videos">{this.state.data.map((item) => {
-                                        return <Video
-                                            key={this.videoId++}
-                                            data={item}
-                                            displayMode={'multi'} />
-                                    })}</div>
-                            }
-                        </div>
-                    </Route>
-                </Switch>
-            </Router>
+            <div className="videos">
+                {
+                    this.state.data === null ?
+                        <h1>No Data Present</h1> :
+                        <div className="videos">{this.state.data.map((item) => {
+                            return <Link to={`videos/${item.movieId}`}>
+                                <Video
+                                    key={this.videoId++}
+                                    clickCallback={this.props.clickCallback}
+                                    data={item}
+                                    displayMode={'multi'} />
+                            </Link>
+
+                        })}</div>
+                }
+            </div>
+
         );
     }
 }

@@ -15,6 +15,7 @@ class Login extends React.Component
     }
 
     render() {
+        console.log('current URL ', window.location.href );
         return (
                 <div>
                     <NavBar />

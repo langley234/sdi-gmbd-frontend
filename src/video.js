@@ -19,7 +19,7 @@ class Video extends React.Component
                 error: false,
                 isLoaded: false,
                 displayMode: props.displayMode,
-                data: null
+                data: this.props.data
             }
         }
         else {
@@ -37,17 +37,20 @@ class Video extends React.Component
     componentDidMount()
     {
         if (this.props.data === undefined) {
+            //console.log('fetching data for video id : ', this.props.videoId)
             fetch(`http://localhost:3001/movies/${this.props.videoId}`)
                 .then(result => result.json())
                 .then(
                     (result) => {
-                        console.log('RESULT : ', result);
+                        //console.log('RESULT : ', result);
                         this.setState({
                             isLoaded: true,
-                            data: result
+                            data: result,
+                            displayMode: 'single'
                         });
                     },
                     (error) => {
+                        console.log('ERROR')
                         this.setState({
                             isLoaded: true,
                             error
@@ -71,32 +74,41 @@ class Video extends React.Component
     }
 
     handleClickCallback = () => {
-        this.setState({
-            displayMode: 'single'
-        })
+       // window.location.reload();
+        this.props.clickCallback();
     }
 
-    render()
-    {
-        // console.log(this.props);
+    render() {
+        //console.log(this.state.data);
         return (
-            <div>
-                {
-                    this.state.error ?
-                        <div></div> :
-                        this.state.displayMode === 'multi' ?
-                            <Link to={`/videos/${this.props.data.movieId}`}>
+            <Router>
+                <div>
+                    {
+                        this.state.error ?
+                            <div></div> :
+                            this.state.displayMode === 'multi' ?
                                 <img
                                     src={this.props.data.poster}
                                     alt={this.props.data.title}
                                     onLoad={this.handleImageLoaded}
                                     onError={this.handleImageLoadError}
                                     onClick={this.handleClickCallback}>
-                                </img>
-                            </Link> :
-                            <div>viewing single video</div>
-                }
-            </div>
+                                </img> :
+                                <div>
+                                    {
+                                        this.state.isLoaded ?
+                                            <img
+                                                src={this.state.data.poster}
+                                                alt={this.state.data.title}
+                                                onLoad={this.handleImageLoaded}
+                                                onError={this.handleImageLoadError}>
+                                            </img> :
+                                            <h3>Loading</h3>
+                                    }
+                                </div>
+                    }
+                </div>
+            </Router>
         );
     }
 }
